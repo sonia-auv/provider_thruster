@@ -21,10 +21,10 @@ endif (NOT CMAKE_BUILD_TYPE)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -std=c++11 -Wall -Wno-unknown-pragmas")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -std=c++11 -O3 -s -Wno-unknown-pragmas")
 
-#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-#list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-#list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
 
 set(provider_thruster_SRC_DIR "src")
 
@@ -44,9 +44,11 @@ find_package(catkin REQUIRED COMPONENTS
 #        "${CMAKE_CURRENT_SOURCE_DIR}/srv/*.srv")
 #add_service_files(DIRECTORY srv FILES ${srv_files})
 
-#file(GLOB msg_files RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/srv/"
-#        "${CMAKE_CURRENT_SOURCE_DIR}/msg/*.msg")
-#add_message_files(DIRECTORY msg FILES ${msg_files})
+file(GLOB msg_files RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/msg/"
+        "${CMAKE_CURRENT_SOURCE_DIR}/msg/*.msg")
+add_message_files(DIRECTORY msg FILES ${msg_files})
+
+generate_messages(DEPENDENCIES std_msgs)
 
 catkin_package(
         INCLUDE_DIRS ${provider_thruster_SRC_DIR}
@@ -76,12 +78,13 @@ include_directories(
 # C R E A T E   E X E C U T A B L E
 
 add_executable(${PROJECT_NAME}_node ${provider_thruster_SRC_DIR}/${PROJECT_NAME}/main.cc ${provider_thruster_FILES})
+
 target_link_libraries(provider_thruster_node
         ${catkin_LIBRARIES}
         ${lib_atlas_LIBRARIES}
         )
-#add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp)
 
+add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp ${PROJECT_NAME}_generate_messages_cpp)
 
 #============================================================================
 # U N I T   T E S T S

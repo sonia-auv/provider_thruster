@@ -1,2 +1,2 @@
-name string
-value int8
+string name
+int8 value
