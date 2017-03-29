@@ -6,6 +6,7 @@
 #define PROVIDER_THRUSTER_PROVIDER_THRUSTER_NODE_H
 
 #include <ros/ros.h>
+#include "provider_thruster/SetThruster.h"
 
 namespace provider_thruster {
 
@@ -20,6 +21,8 @@ class ProviderThrusterNode {
 
  private:
   ros::NodeHandlePtr nh_;
+
+    void setThrusterCallback(const SetThruster::ConstPtr& msg);
 
 };
 }  // namespace provider_thruster
