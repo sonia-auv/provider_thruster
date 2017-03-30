@@ -4,6 +4,8 @@
 
 #include "provider_thruster/provider_thruster_node.h"
 #include "provider_thruster/SetThruster.h"
+#include <string>
+#include "interface_rs485/SendRS485Msg.h"
 
 namespace provider_thruster {
 
@@ -15,11 +17,15 @@ namespace provider_thruster {
     ProviderThrusterNode::ProviderThrusterNode(ros::NodeHandlePtr &nh) : nh_(nh)
     {
 
-        // Procéder à 14 Hz
+        ros::Subscriber subscriber = nh->subscribe("SetThruster", 1000, &ProviderThrusterNode::setThrusterCallback, this);
 
-        auto patate = nh->subscribe("SetThruster", 1000, &ProviderThrusterNode::setThrusterCallback, this);
+        ros::Rate r(14); // 14 Hz
 
-        ros::spin();
+        while (ros::ok())
+        {
+            ros::spinOnce();
+            r.sleep();
+        }
 
     }
 
@@ -29,7 +35,13 @@ namespace provider_thruster {
 
     void ProviderThrusterNode::setThrusterCallback(const provider_thruster::SetThruster::ConstPtr& msg)
     {
-        ROS_INFO("Message recu");
+
+        ROS_INFO("Message recu : {name: %s, value: %i}",msg->name.c_str(), msg->value);
+
+        // Traitement du message à faire ici
+
+        
+
     }
 }
 

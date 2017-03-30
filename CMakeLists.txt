@@ -36,6 +36,7 @@ find_package(catkin REQUIRED COMPONENTS
         std_msgs
         message_generation
         lib_atlas
+        interface_rs485
         )
 
 # CMake does not detect new file when globbing.
@@ -58,6 +59,7 @@ catkin_package(
         std_msgs
         message_runtime
         lib_atlas
+        interface_rs485
 )
 
 #===============================================================================
