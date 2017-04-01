@@ -36,7 +36,6 @@ namespace provider_thruster {
 
     void ProviderThrusterNode::thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg)
     {
-
         // Traitement du message à faire ici
         ROS_DEBUG("Message received : {ID: %u, effort: %i}", msg->ID, msg->effort);
 

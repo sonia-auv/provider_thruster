@@ -35,7 +35,6 @@ find_package(catkin REQUIRED COMPONENTS
         roscpp
         std_msgs
         message_generation
-        lib_atlas
         interface_rs485
         )
 
@@ -56,7 +55,6 @@ catkin_package(
         roscpp
         std_msgs
         message_runtime
-        lib_atlas
         interface_rs485
 )
 
@@ -81,7 +79,6 @@ add_executable(${PROJECT_NAME}_node ${provider_thruster_SRC_DIR}/${PROJECT_NAME}
 
 target_link_libraries(provider_thruster_node
         ${catkin_LIBRARIES}
-        ${lib_atlas_LIBRARIES}
         )
 
 add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp ${PROJECT_NAME}_generate_messages_cpp)
