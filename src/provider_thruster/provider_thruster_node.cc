@@ -38,7 +38,7 @@ namespace provider_thruster {
     {
 
         // Traitement du message à faire ici
-        ROS_INFO("Message recu : {name: %u, value: %i}", msg->ID, msg->effort);
+        ROS_DEBUG("Message received : {ID: %u, effort: %i}", msg->ID, msg->effort);
 
         interface_rs485::SendRS485Msg rs485Msg;
         rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
