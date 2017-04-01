@@ -16,9 +16,9 @@ namespace provider_thruster {
     ProviderThrusterNode::ProviderThrusterNode(ros::NodeHandlePtr &nh) : nh_(nh)
     {
 
-        ros::Subscriber subscriber = nh->subscribe("ThrusterEffort", 1000, &ProviderThrusterNode::thrusterEffortCallback, this);
+        ros::Subscriber subscriber = nh->subscribe("/proc_control/thruster_effort", 1000, &ProviderThrusterNode::thrusterEffortCallback, this);
 
-        this->rs485Publisher = nh->advertise<SetThruster>("SetThruster", 1000);
+        this->rs485Publisher = nh->advertise<interface_rs485::SendRS485Msg>("/interface_rs485/dataRx", 1000);
 
         ros::Rate r(14); // 14 Hz
 
@@ -37,45 +37,56 @@ namespace provider_thruster {
     void ProviderThrusterNode::thrusterEffortCallback(const proc_control::ThrusterEffort::ConstPtr& msg)
     {
 
-        //bool estT1 = msg->ID == proc_control::ThrusterEffort::UNIQUE_ID_T1;
-
         // Traitement du message à faire ici
         ROS_INFO("Message recu : {name: %u, value: %i}", msg->ID, msg->effort);
 
-        SetThruster thrusterMessage;
+        interface_rs485::SendRS485Msg rs485Msg;
+        rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
+
+        int effort = msg->effort;
+        u_char power = 0;
+
+        if (effort < -100)
+            power = 0;
+        else if (effort > 100)
+            power = 200;
+        else
+            power = effort + 100;
+
+
+        rs485Msg.data.push_back(power);
 
         switch (msg->ID)
         {
             case proc_control::ThrusterEffort::UNIQUE_ID_T1:
-                thrusterMessage.name = "T1";
+                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_0;
                 break;
             case proc_control::ThrusterEffort::UNIQUE_ID_T2:
-                thrusterMessage.name = "T2";
+                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_1;
                 break;
             case proc_control::ThrusterEffort::UNIQUE_ID_T3:
-                thrusterMessage.name = "T3";
+                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_2;
                 break;
             case proc_control::ThrusterEffort::UNIQUE_ID_T4:
-                thrusterMessage.name = "T4";
+                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_3;
                 break;
             case proc_control::ThrusterEffort::UNIQUE_ID_T5:
-                thrusterMessage.name = "T5";
+                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_4;
                 break;
             case proc_control::ThrusterEffort::UNIQUE_ID_T6:
-                thrusterMessage.name = "T6";
+                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_5;
                 break;
             case proc_control::ThrusterEffort::UNIQUE_ID_T7:
-                thrusterMessage.name = "T7";
+                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_6;
                 break;
             case proc_control::ThrusterEffort::UNIQUE_ID_T8:
-                thrusterMessage.name = "T8";
+                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_7;
                 break;
 
         }
 
-        thrusterMessage.value = msg->effort;
 
-        this->rs485Publisher.publish(thrusterMessage);
+        this->rs485Publisher.publish(rs485Msg);
 
     }
 }
