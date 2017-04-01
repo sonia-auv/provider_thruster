@@ -6,8 +6,7 @@
 #define PROVIDER_THRUSTER_PROVIDER_THRUSTER_NODE_H
 
 #include <ros/ros.h>
-#include "provider_thruster/SetThruster.h"
-#include "proc_control/ThrusterEffort.h"
+#include "provider_thruster/ThrusterEffort.h"
 
 namespace provider_thruster {
 
@@ -23,7 +22,7 @@ class ProviderThrusterNode {
  private:
   ros::NodeHandlePtr nh_;
 
-    void thrusterEffortCallback(const proc_control::ThrusterEffort::ConstPtr& msg);
+    void thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg);
 
     ros::Publisher rs485Publisher;
 
