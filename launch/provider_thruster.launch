@@ -1,0 +1,6 @@
+<launch>
+	<node name="provider_thruster"
+	    pkg="provider_thruster"
+	    type="provider_thruster_node"
+	    output="screen" />
+</launch>
