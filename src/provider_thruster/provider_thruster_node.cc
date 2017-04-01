@@ -16,7 +16,7 @@ namespace provider_thruster {
     ProviderThrusterNode::ProviderThrusterNode(ros::NodeHandlePtr &nh) : nh_(nh)
     {
 
-        ros::Subscriber subscriber = nh->subscribe("/proc_control/thruster_effort", 1000, &ProviderThrusterNode::thrusterEffortCallback, this);
+        ros::Subscriber subscriber = nh->subscribe("/provider_thruster/thruster_effort", 1000, &ProviderThrusterNode::thrusterEffortCallback, this);
 
         this->rs485Publisher = nh->advertise<interface_rs485::SendRS485Msg>("/interface_rs485/dataRx", 1000);
 
