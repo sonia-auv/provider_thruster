@@ -43,49 +43,24 @@ namespace provider_thruster {
         rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
 
         int effort = msg->effort;
-        u_char power = 0;
 
-        if (effort < -100)
-            power = 0;
-        else if (effort > 100)
-            power = 200;
-        else
-            power = effort + 100;
-
-
-        rs485Msg.data.push_back(power);
-
-        switch (msg->ID)
-        {
-            case ThrusterEffort::UNIQUE_ID_T1:
-                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_1;
-                break;
-            case ThrusterEffort::UNIQUE_ID_T2:
-                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_2;
-                break;
-            case ThrusterEffort::UNIQUE_ID_T3:
-                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_3;
-                break;
-            case ThrusterEffort::UNIQUE_ID_T4:
-                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_4;
-                break;
-            case ThrusterEffort::UNIQUE_ID_T5:
-                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_5;
-                break;
-            case ThrusterEffort::UNIQUE_ID_T6:
-                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_6;
-                break;
-            case ThrusterEffort::UNIQUE_ID_T7:
-                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_7;
-                break;
-            case ThrusterEffort::UNIQUE_ID_T8:
-                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_8;
-                break;
-
+        if (effort < -100) {
+          power[msg->ID] = 0;
+        }
+        else if (effort > 100) {
+          power[msg->ID] = 200;
+        }
+        else {
+          power[msg->ID] = effort + 100;
         }
 
+      for(uint8_t i = 0; i < 8; i++) {
+        rs485Msg.data.push_back(power[i]);
+      }
 
-        this->rs485Publisher.publish(rs485Msg);
+      rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
+
+      this->rs485Publisher.publish(rs485Msg);
 
     }
 }

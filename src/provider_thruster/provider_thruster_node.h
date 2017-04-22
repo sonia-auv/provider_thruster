@@ -22,9 +22,10 @@ class ProviderThrusterNode {
  private:
   ros::NodeHandlePtr nh_;
 
-    void thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg);
+  void thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg);
 
-    ros::Publisher rs485Publisher;
+  uint8_t power[8] = {100};
+  ros::Publisher rs485Publisher;
 
 };
 }  // namespace provider_thruster
