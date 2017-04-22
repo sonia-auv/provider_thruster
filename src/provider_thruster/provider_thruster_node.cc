@@ -58,28 +58,28 @@ namespace provider_thruster {
         switch (msg->ID)
         {
             case ThrusterEffort::UNIQUE_ID_T1:
-                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_0;
-                break;
-            case ThrusterEffort::UNIQUE_ID_T2:
                 rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_1;
                 break;
-            case ThrusterEffort::UNIQUE_ID_T3:
+            case ThrusterEffort::UNIQUE_ID_T2:
                 rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_2;
                 break;
-            case ThrusterEffort::UNIQUE_ID_T4:
+            case ThrusterEffort::UNIQUE_ID_T3:
                 rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_3;
                 break;
-            case ThrusterEffort::UNIQUE_ID_T5:
+            case ThrusterEffort::UNIQUE_ID_T4:
                 rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_4;
                 break;
-            case ThrusterEffort::UNIQUE_ID_T6:
+            case ThrusterEffort::UNIQUE_ID_T5:
                 rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_5;
                 break;
-            case ThrusterEffort::UNIQUE_ID_T7:
+            case ThrusterEffort::UNIQUE_ID_T6:
                 rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_6;
                 break;
-            case ThrusterEffort::UNIQUE_ID_T8:
+            case ThrusterEffort::UNIQUE_ID_T7:
                 rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_7;
+                break;
+            case ThrusterEffort::UNIQUE_ID_T8:
+                rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_8;
                 break;
 
         }
