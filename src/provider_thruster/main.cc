@@ -8,5 +8,7 @@ int main(int argc, char **argv) {
   ros::NodeHandlePtr nh(new ros::NodeHandle("~"));
   provider_thruster::ProviderThrusterNode ptn(nh);
 
+  ptn.Spin();
+
   return 0;
 }

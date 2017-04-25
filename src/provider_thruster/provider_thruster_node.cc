@@ -16,20 +16,12 @@ namespace provider_thruster {
     ProviderThrusterNode::ProviderThrusterNode(ros::NodeHandlePtr &nh) : nh_(nh)
     {
 
-        ros::Subscriber subscriber = nh->subscribe("/provider_thruster/thruster_effort", 1000, &ProviderThrusterNode::thrusterEffortCallback, this);
+        thrusterEffortSubscriber = nh->subscribe("/provider_thruster/thruster_effort", 1000, &ProviderThrusterNode::thrusterEffortCallback, this);
 
         this->rs485Publisher = nh->advertise<interface_rs485::SendRS485Msg>("/interface_rs485/dataRx", 1000);
 
         for(uint8_t i = 0; i < 8; i++) {
           power[i] = 100;
-        }
-
-        ros::Rate r(14); // 14 Hz
-
-        while (ros::ok())
-        {
-            ros::spinOnce();
-            r.sleep();
         }
 
     }
@@ -38,9 +30,20 @@ namespace provider_thruster {
     //
     ProviderThrusterNode::~ProviderThrusterNode() { }
 
+    void ProviderThrusterNode::Spin()
+    {
+        ros::Rate r(14); // 14 Hz
+
+        while (ros::ok())
+        {
+            ros::spinOnce();
+            r.sleep();
+        }
+    }
+
     void ProviderThrusterNode::thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg)
     {
-        // Traitement du message à faire ici
+
         ROS_DEBUG("Message received : {ID: %u, effort: %i}", msg->ID, msg->effort);
 
         interface_rs485::SendRS485Msg rs485Msg;

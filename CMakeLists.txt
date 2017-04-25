@@ -65,7 +65,8 @@ file(GLOB_RECURSE provider_thruster_FILES
         "${provider_thruster_SRC_DIR}/*.cc"
         "${provider_thruster_SRC_DIR}/*.h")
 
-list(REMOVE_ITEM provider_thruster_FILES ${CMAKE_CURRENT_SOURCE_DIR}/${provider_thruster_SRC_DIR}/${PROJECT_NAME}/main.cc)
+list(REMOVE_ITEM provider_thruster_FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/${provider_thruster_SRC_DIR}/${PROJECT_NAME}/main.cc)
 
 include_directories(
         ${catkin_INCLUDE_DIRS}
@@ -75,7 +76,13 @@ include_directories(
 #===============================================================================
 # C R E A T E   E X E C U T A B L E
 
-add_executable(${PROJECT_NAME}_node ${provider_thruster_SRC_DIR}/${PROJECT_NAME}/main.cc ${provider_thruster_FILES})
+add_executable(${PROJECT_NAME}_node
+        ${provider_thruster_SRC_DIR}/${PROJECT_NAME}/main.cc
+        ${provider_thruster_SRC_DIR}/${PROJECT_NAME}/provider_thruster_node.cc
+        #/test/temp_test.cc
+        #${provider_thruster_FILES} test/temp_test.cc
+        )
+
 
 target_link_libraries(provider_thruster_node
         ${catkin_LIBRARIES}
@@ -88,3 +95,8 @@ add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp ${PR
 
 # Uncomment this line to compile UT.
 #add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
+if (${CATKIN_ENABLE_TESTING})
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
+endif ()
+
+

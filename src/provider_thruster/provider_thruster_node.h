@@ -19,8 +19,17 @@ class ProviderThrusterNode {
 
   ~ProviderThrusterNode();
 
+    void Spin();
+
+    uint8_t getPower(int index)
+    {
+        return power[index];
+    }
+
  private:
   ros::NodeHandlePtr nh_;
+
+    ros::Subscriber thrusterEffortSubscriber;
 
   void thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg);
 
