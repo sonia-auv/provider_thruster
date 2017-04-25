@@ -24,7 +24,7 @@ class ProviderThrusterNode {
 
   void thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg);
 
-  uint8_t power[8] = {100};
+  uint8_t power[8];
   ros::Publisher rs485Publisher;
 
 };

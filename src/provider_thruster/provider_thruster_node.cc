@@ -20,6 +20,10 @@ namespace provider_thruster {
 
         this->rs485Publisher = nh->advertise<interface_rs485::SendRS485Msg>("/interface_rs485/dataRx", 1000);
 
+        for(uint8_t i = 0; i < 8; i++) {
+          power[i] = 100;
+        }
+
         ros::Rate r(14); // 14 Hz
 
         while (ros::ok())
@@ -45,13 +49,13 @@ namespace provider_thruster {
         int effort = msg->effort;
 
         if (effort < -100) {
-          power[msg->ID] = 0;
+          power[msg->ID - 1] = 0;
         }
         else if (effort > 100) {
-          power[msg->ID] = 200;
+          power[msg->ID - 1] = 200;
         }
         else {
-          power[msg->ID] = effort + 100;
+          power[msg->ID - 1] = effort + 100;
         }
 
       for(uint8_t i = 0; i < 8; i++) {
