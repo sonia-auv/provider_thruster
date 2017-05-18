@@ -4,7 +4,6 @@
 
 #include "provider_thruster/provider_thruster_node.h"
 #include <string>
-#include "interface_rs485/SendRS485Msg.h"
 
 namespace provider_thruster {
 
@@ -32,21 +31,30 @@ namespace provider_thruster {
 
     void ProviderThrusterNode::Spin()
     {
-        ros::Rate r(14); // 14 Hz
+        ros::Rate r(10); // 10 Hz
 
         while (ros::ok())
         {
-            ros::spinOnce();
-            r.sleep();
+          ros::spinOnce();
+          publishLastCommand();
+          r.sleep();
         }
     }
 
+    //------------------------------------------------------------------------------
+    //
+    void ProviderThrusterNode::publishLastCommand()
+    {
+      rs485Publisher.publish(rs485Msg);
+    }
+
+    //------------------------------------------------------------------------------
+    //
     void ProviderThrusterNode::thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg)
     {
 
         ROS_DEBUG("Message received : {ID: %u, effort: %i}", msg->ID, msg->effort);
 
-        interface_rs485::SendRS485Msg rs485Msg;
         rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
 
         int effort = msg->effort;
@@ -67,7 +75,7 @@ namespace provider_thruster {
 
       rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
 
-      this->rs485Publisher.publish(rs485Msg);
+      rs485Publisher.publish(rs485Msg);
 
     }
 }

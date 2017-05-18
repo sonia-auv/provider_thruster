@@ -7,6 +7,7 @@
 
 #include <ros/ros.h>
 #include "provider_thruster/ThrusterEffort.h"
+#include "interface_rs485/SendRS485Msg.h"
 
 namespace provider_thruster {
 
@@ -32,7 +33,9 @@ class ProviderThrusterNode {
     ros::Subscriber thrusterEffortSubscriber;
 
   void thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg);
+  void publishLastCommand();
 
+  interface_rs485::SendRS485Msg rs485Msg;
   uint8_t power[8];
   ros::Publisher rs485Publisher;
 
