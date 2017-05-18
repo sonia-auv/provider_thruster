@@ -45,6 +45,13 @@ namespace provider_thruster {
     //
     void ProviderThrusterNode::publishLastCommand()
     {
+      rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
+
+      for(uint8_t i = 0; i < 8; i++) {
+        rs485Msg.data.push_back(power[i]);
+      }
+
+      rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
       rs485Publisher.publish(rs485Msg);
     }
 
