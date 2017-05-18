@@ -19,6 +19,8 @@ namespace provider_thruster {
 
         this->rs485Publisher = nh->advertise<interface_rs485::SendRS485Msg>("/interface_rs485/dataRx", 1000);
 
+        rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
+        rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
         for(uint8_t i = 0; i < 8; i++) {
           power[i] = 100;
         }
@@ -45,13 +47,10 @@ namespace provider_thruster {
     //
     void ProviderThrusterNode::publishLastCommand()
     {
-      rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
-
+      rs485Msg.data.clear();
       for(uint8_t i = 0; i < 8; i++) {
         rs485Msg.data.push_back(power[i]);
       }
-
-      rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
       rs485Publisher.publish(rs485Msg);
     }
 
@@ -59,7 +58,6 @@ namespace provider_thruster {
     //
     void ProviderThrusterNode::thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg)
     {
-
         ROS_DEBUG("Message received : {ID: %u, effort: %i}", msg->ID, msg->effort);
 
         rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
@@ -76,6 +74,7 @@ namespace provider_thruster {
           power[msg->ID - 1] = effort + 100;
         }
 
+      rs485Msg.data.clear();
       for(uint8_t i = 0; i < 8; i++) {
         rs485Msg.data.push_back(power[i]);
       }
