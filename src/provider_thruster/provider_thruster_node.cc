@@ -16,6 +16,8 @@ namespace provider_thruster {
     //
     ProviderThrusterNode::ProviderThrusterNode(ros::NodeHandlePtr &nh) :
         nh_(nh),
+        motors_out(8,1),
+        motors_in(8, 1),
         fichier{"T1","T2","T3","T4","T5","T6","T7","T8"},
         calcul(8,6)
     {
@@ -88,7 +90,7 @@ namespace provider_thruster {
         vecteur[4]=msg.torque.y;
         vecteur[5]=msg.torque.z;
 
-        motors_in = calcul*vecteur;
+        motors_in = calcul * vecteur;
 
         rs485Msg.data.clear();
         for(uint8_t j=0;j<8;j++) {
@@ -102,7 +104,7 @@ namespace provider_thruster {
             } else {
                 motors_out[j] = motors_in[j] + 100;
             }
-            rs485Msg.data.push_back(motors_out(j,1));
+            rs485Msg.data.push_back(motors_out[j]);
         }
 
       rs485Msg.data.clear();
