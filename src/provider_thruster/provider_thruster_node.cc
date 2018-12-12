@@ -38,6 +38,7 @@ namespace provider_thruster {
 
 
         thrusterEffortSubscriber = nh->subscribe("/provider_thruster/thruster_effort", 1000, &ProviderThrusterNode::thrusterEffortCallback, this);
+        thrusterEffortSubscriber = nh->subscribe("/provider_thruster/thruster_effort_vector", 1000, &ProviderThrusterNode::thrustervectoreffortCallback, this);
 
         this->rs485Publisher = nh->advertise<interface_rs485::SendRS485Msg>("/interface_rs485/dataRx", 1000);
 
@@ -78,7 +79,7 @@ namespace provider_thruster {
 
     //------------------------------------------------------------------------------
     //
-    void ProviderThrusterNode::thrusterEffortCallback(const geometry_msgs::Wrench & msg)
+    void ProviderThrusterNode::thrustervectoreffortCallback(const geometry_msgs::Wrench & msg)
     {
 
         rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
@@ -115,7 +116,39 @@ namespace provider_thruster {
       rs485Publisher.publish(rs485Msg);
 
     }
+
+
+
+    void ProviderThrusterNode::thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg)
+    {
+        ROS_DEBUG("Message received : {ID: %u, effort: %i}", msg->ID, msg->effort);
+
+        rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
+
+        int effort = msg->effort;
+
+        if (effort < -100) {
+            power[msg->ID - 1] = 0;
+        }
+        else if (effort > 100) {
+            power[msg->ID - 1] = 200;
+        }
+        else {
+            power[msg->ID - 1] = effort + 100;
+        }
+
+        rs485Msg.data.clear();
+        for(uint8_t i = 0; i < 8; i++) {
+            rs485Msg.data.push_back(power[i]);
+        }
+
+        rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
+
+        rs485Publisher.publish(rs485Msg);
+
+    }
 }
+
 
 
 
