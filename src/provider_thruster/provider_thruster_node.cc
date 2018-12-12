@@ -41,6 +41,7 @@ namespace provider_thruster {
         thrusterEffortSubscriber = nh->subscribe("/provider_thruster/thruster_effort_vector", 1000, &ProviderThrusterNode::thrustervectoreffortCallback, this);
 
         this->rs485Publisher = nh->advertise<interface_rs485::SendRS485Msg>("/interface_rs485/dataRx", 1000);
+        effortPublisher = nh->advertise<ThrusterEffort>("/provider_thruster/effort", 1000);
 
         rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
         rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
@@ -81,6 +82,7 @@ namespace provider_thruster {
     //
     void ProviderThrusterNode::thrustervectoreffortCallback(const geometry_msgs::Wrench & msg)
     {
+        ThrusterEffort effortMsg;
 
         rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
 
@@ -106,6 +108,9 @@ namespace provider_thruster {
                 motors_out[j] = motors_in[j] + 100;
             }
             rs485Msg.data.push_back(motors_out[j]);
+            effortMsg.ID = j;
+            effortMsg.effort = motors_in[j];
+            effortPublisher.publish(effortMsg);
         }
 
       rs485Msg.data.clear();
@@ -145,6 +150,7 @@ namespace provider_thruster {
         rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
 
         rs485Publisher.publish(rs485Msg);
+        effortPublisher.publish(*msg);
 
     }
 }
