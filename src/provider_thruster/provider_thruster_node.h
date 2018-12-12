@@ -44,8 +44,9 @@ class ProviderThrusterNode {
   ros::NodeHandlePtr nh_;
 
     ros::Subscriber thrusterEffortSubscriber;
+    ros::Subscriber effortSubscriber;
 
-  void thrusterEffortCallback(const ThrusterEffort::ConstPtr& msg);
+  void thrusterEffortCallback(const ThrusterEffort& msg);
   void thrustervectoreffortCallback(const geometry_msgs::Wrench & msg);
   void publishLastCommand();
 
