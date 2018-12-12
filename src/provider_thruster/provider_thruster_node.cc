@@ -150,7 +150,7 @@ namespace provider_thruster {
         rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
 
         rs485Publisher.publish(rs485Msg);
-        effortPublisher.publish(*msg);
+        effortPublisher.publish(msg);
 
     }
 }
