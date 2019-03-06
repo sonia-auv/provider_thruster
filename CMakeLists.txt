@@ -36,6 +36,7 @@ find_package(catkin REQUIRED COMPONENTS
         std_msgs
         message_generation
         interface_rs485
+        geometry_msgs
         )
 
 # CMake does not detect new file when globbing.
@@ -86,6 +87,8 @@ add_executable(${PROJECT_NAME}_node
 
 target_link_libraries(provider_thruster_node
         ${catkin_LIBRARIES}
+        ${Eigen_LIBRARIES}
+        yaml-cpp
         )
 
 add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp ${PROJECT_NAME}_generate_messages_cpp)
