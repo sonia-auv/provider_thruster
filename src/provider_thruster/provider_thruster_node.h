@@ -37,7 +37,7 @@ class ProviderThrusterNode {
 
     uint8_t getPower(int index)
     {
-        return power[index];
+        return motors_out[index];
     }
 
  private:
@@ -52,7 +52,7 @@ class ProviderThrusterNode {
 
 
   interface_rs485::SendRS485Msg rs485Msg;
-  uint8_t power[8];
+  //uint8_t power[8];
   ros::Publisher rs485Publisher;
   ros::Publisher effortPublisher;
 

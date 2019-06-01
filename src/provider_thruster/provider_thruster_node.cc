@@ -46,7 +46,7 @@ namespace provider_thruster {
         rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
         rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
         for(uint8_t i = 0; i < 8; i++) {
-          power[i] = 100;
+            motors_out[i] = 100;
         }
 
     }
@@ -73,7 +73,7 @@ namespace provider_thruster {
     {
       rs485Msg.data.clear();
       for(uint8_t i = 0; i < 8; i++) {
-        rs485Msg.data.push_back(power[i]);
+        rs485Msg.data.push_back(motors_out[i]);
       }
       rs485Publisher.publish(rs485Msg);
     }
@@ -113,7 +113,7 @@ namespace provider_thruster {
             effortPublisher.publish(effortMsg);
         }
 
-      rs485Msg.data.clear();
+//rs485Msg.data.clear();
 
 
       rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
@@ -133,18 +133,18 @@ namespace provider_thruster {
         int effort = msg.effort;
 
         if (effort < -100) {
-            power[msg.ID - 1] = 0;
+            motors_out[msg.ID - 1] = 0;
         }
         else if (effort > 100) {
-            power[msg.ID - 1] = 200;
+            motors_out[msg.ID - 1] = 200;
         }
         else {
-            power[msg.ID - 1] = effort + 100;
+            motors_out[msg.ID - 1] = effort + 100;
         }
 
         rs485Msg.data.clear();
         for(uint8_t i = 0; i < 8; i++) {
-            rs485Msg.data.push_back(power[i]);
+            rs485Msg.data.push_back(motors_out[i]);
         }
 
         rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
