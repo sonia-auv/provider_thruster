@@ -86,23 +86,30 @@ namespace provider_thruster {
 
         rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
 
-        vecteur[0]=msg.force.x;
-        vecteur[1]=msg.force.y;
-        vecteur[2]=msg.force.z;
-        vecteur[3]=msg.torque.x;
-        vecteur[4]=msg.torque.y;
-        vecteur[5]=msg.torque.z;
+        //vecteur[0]=msg.force.x;
+        //vecteur[1]=msg.force.y;
+        //vecteur[2]=msg.force.z;
+        //vecteur[3]=msg.torque.x;
+        //vecteur[4]=msg.torque.y;
+        //vecteur[5]=msg.torque.z;
+
+        vecteur[0]=2;
+        vecteur[1]=0;
+        vecteur[2]=0;
+        vecteur[3]=0;
+        vecteur[4]=0;
+        vecteur[5]=0;
 
         motors_in = calcul * vecteur;
 
         rs485Msg.data.clear();
         for(uint8_t j=0;j<8;j++) {
 
-            if (motors_in [j] <-100) {
-                motors_out[j] = 0;
+            if (motors_in [j] <-80) {
+                motors_out[j] =20;
 
-            } else if (motors_in[j] > 100) {
-                motors_out[j] = 200;
+            } else if (motors_in[j] > 80) {
+                motors_out[j] = 180;
 
             } else {
                 motors_out[j] = motors_in[j] + 100;
