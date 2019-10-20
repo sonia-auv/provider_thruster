@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <vector>
+
 
 namespace provider_thruster {
 
@@ -22,15 +24,18 @@ namespace provider_thruster {
         calcul(8,6)
     {
 
-        YAML::Node node = YAML::LoadFile(file_path_);
+        //YAML::Node node = YAML::LoadFile(file_path_);
 
         int j=0;
         for(auto&t : fichier){
-            auto thruster = node[t];
-            assert(thruster.Type() == YAML::NodeType::Sequence);
+            std::vector<double> value;
+            ros::param::get("/provider_thruster/" + t, value);
+
+            //auto thruster = node[t];
+            //assert(thruster.Type() == YAML::NodeType::Sequence);
            // std::array<double, 6> force_array = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
             for (uint8_t i = 0; i < 6; i++) {
-                calcul(j,i) = thruster[i].as<double>();
+                calcul(j,i) = value[i];
             }
 
             j++;

@@ -56,7 +56,7 @@ class ProviderThrusterNode {
   ros::Publisher rs485Publisher;
   ros::Publisher effortPublisher;
 
-  const std::string file_path_ = std::string(std::getenv("ROS_SONIA_WS") ) + "/src" + "/provider_thruster" + "/config" + "/thruster.yaml";
+  //const std::string file_path_ = std::string(std::getenv("ROS_SONIA_WS") ) + "/src" + "/provider_thruster" + "/config" + "/thruster.yaml";
   motor_output motors_out;
   motor_input motors_in;
   tab_string fichier;
