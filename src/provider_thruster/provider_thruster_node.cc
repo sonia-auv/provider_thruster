@@ -111,7 +111,7 @@ namespace provider_thruster {
         for(uint8_t j=0;j<8;j++) {
 
             if (motors_in [j] <-30) {
-                motors_out[j] =70;
+                motors_out[j] = 70;
 
             } else if (motors_in[j] > 30) {
                 motors_out[j] = 130;
@@ -121,7 +121,7 @@ namespace provider_thruster {
             }
             rs485Msg.data.push_back(motors_out[j]);
             effortMsg.ID = j+1;
-            effortMsg.effort = motors_in[j];
+            effortMsg.effort = motors_out[j];
             effortPublisher.publish(effortMsg);
         }
 
