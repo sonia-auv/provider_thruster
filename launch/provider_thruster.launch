@@ -5,6 +5,6 @@
 	    output="screen" />
 
     <rosparam command="load"
-	    file="$(find provider_thruster)/config/thruster.yaml"
+	    file="$(find provider_thruster)/config/thruster_test_roll_pitch.yaml"
 	    ns="/provider_thruster"/>
 </launch>
