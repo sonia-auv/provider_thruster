@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <vector>
+
 
 namespace provider_thruster {
 
@@ -22,15 +24,13 @@ namespace provider_thruster {
         calcul(8,6)
     {
 
-        YAML::Node node = YAML::LoadFile(file_path_);
-
         int j=0;
         for(auto&t : fichier){
-            auto thruster = node[t];
-            assert(thruster.Type() == YAML::NodeType::Sequence);
-           // std::array<double, 6> force_array = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+            std::vector<double> value;
+            ros::param::get("/provider_thruster/" + t, value);
+
             for (uint8_t i = 0; i < 6; i++) {
-                calcul(j,i) = thruster[i].as<double>();
+                calcul(j,i) = value[i];
             }
 
             j++;
@@ -93,20 +93,13 @@ namespace provider_thruster {
         vecteur[4]=msg.torque.y;
         vecteur[5]=msg.torque.z;
 
-        //vecteur[0]=2;
-        //vecteur[1]=0;
-        //vecteur[2]=0;
-        //vecteur[3]=0;
-        //vecteur[4]=0;
-        //vecteur[5]=0;
-
         motors_in = calcul * vecteur;
 
         rs485Msg.data.clear();
         for(uint8_t j=0;j<8;j++) {
 
             if (motors_in [j] <-30) {
-                motors_out[j] =70;
+                motors_out[j] = 70;
 
             } else if (motors_in[j] > 30) {
                 motors_out[j] = 130;
@@ -116,12 +109,9 @@ namespace provider_thruster {
             }
             rs485Msg.data.push_back(motors_out[j]);
             effortMsg.ID = j+1;
-            effortMsg.effort = motors_in[j];
+            effortMsg.effort = motors_out[j];
             effortPublisher.publish(effortMsg);
         }
-
-//rs485Msg.data.clear();
-
 
       rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
 
