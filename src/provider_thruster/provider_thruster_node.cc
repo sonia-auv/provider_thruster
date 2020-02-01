@@ -24,16 +24,11 @@ namespace provider_thruster {
         calcul(8,6)
     {
 
-        //YAML::Node node = YAML::LoadFile(file_path_);
-
         int j=0;
         for(auto&t : fichier){
             std::vector<double> value;
             ros::param::get("/provider_thruster/" + t, value);
 
-            //auto thruster = node[t];
-            //assert(thruster.Type() == YAML::NodeType::Sequence);
-           // std::array<double, 6> force_array = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
             for (uint8_t i = 0; i < 6; i++) {
                 calcul(j,i) = value[i];
             }
@@ -98,13 +93,6 @@ namespace provider_thruster {
         vecteur[4]=msg.torque.y;
         vecteur[5]=msg.torque.z;
 
-        //vecteur[0]=2;
-        //vecteur[1]=0;
-        //vecteur[2]=0;
-        //vecteur[3]=0;
-        //vecteur[4]=0;
-        //vecteur[5]=0;
-
         motors_in = calcul * vecteur;
 
         rs485Msg.data.clear();
@@ -124,9 +112,6 @@ namespace provider_thruster {
             effortMsg.effort = motors_out[j];
             effortPublisher.publish(effortMsg);
         }
-
-//rs485Msg.data.clear();
-
 
       rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
 
