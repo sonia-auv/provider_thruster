@@ -117,7 +117,7 @@ namespace provider_thruster {
                 motors_out[j] = 130;
 
             } else {
-                motors_out[j] = motors_in[j] + 100;
+                motors_out[j] = motors_out[j] + 100;
             }
             rs485Msg.data.push_back(motors_out[j]);
             effortMsg.ID = j+1;
