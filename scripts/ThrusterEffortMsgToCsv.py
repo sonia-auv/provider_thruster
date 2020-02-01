@@ -31,7 +31,6 @@ class ThrusterEffortMsgToCsv:
         self.csv_file.close()
 
     def write_header(self):
-        # self.write_line("seq;stamp;frequency;amplitude;noise;heading;elevation;raw_data_chanRefReal;raw_data_chanRefImage;raw_data_chan1Real;raw_data_chan1Image;raw_data_chan2Real;raw_data_chan2Image")
         self.write_line("ID;effort")
 
     def write_line(self, line):
@@ -44,22 +43,6 @@ class ThrusterEffortMsgToCsv:
         effort = object.effort
 
         elements = [ID, effort]
-
-        #seq = object.header.seq
-        #stamp = object.header.stamp.secs
-        #frequency = object.frequency
-        #amplitude = object.amplitude
-        #noise = object.noise
-        #heading = object.heading
-        #elevation = object.elevation
-        #chan_ref_real = object.raw_data.channelReferenceReal
-        #chan_ref_image = object.raw_data.channelReferenceImage
-        #chan_1_real = object.raw_data.channel1Real
-        #chan_1_image = object.raw_data.channel1Image
-        #chan_2_real = object.raw_data.channel2Real
-        #chan_2_image = object.raw_data.channel2Image
-
-        #elements = [seq,stamp,frequency,amplitude, noise, heading, elevation, chan_ref_real, chan_ref_image, chan_1_real, chan_1_image, chan_2_real, chan_2_image]
 
         line = ';'.join(map(str, elements))
 
