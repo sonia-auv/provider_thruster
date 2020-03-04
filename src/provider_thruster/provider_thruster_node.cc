@@ -98,11 +98,11 @@ namespace provider_thruster {
         rs485Msg.data.clear();
         for(uint8_t j=0;j<8;j++) {
 
-            if (motors_in [j] <-30) {
-                motors_out[j] = 70;
+            if (motors_in [j] <-35) {
+                motors_out[j] = 65;
 
-            } else if (motors_in[j] > 30) {
-                motors_out[j] = 130;
+            } else if (motors_in[j] > 35) {
+                motors_out[j] = 135;
 
             } else {
                 motors_out[j] = motors_in[j] + 100;
@@ -129,11 +129,11 @@ namespace provider_thruster {
 
         int effort = msg.effort;
 
-        if (effort < -30) {
-            motors_out[msg.ID - 1] = 70;
+        if (effort < -35) {
+            motors_out[msg.ID - 1] = 65;
         }
-        else if (effort > 30) {
-            motors_out[msg.ID - 1] = 130;
+        else if (effort > 35) {
+            motors_out[msg.ID - 1] = 135;
         }
         else {
             motors_out[msg.ID - 1] = effort + 100;
