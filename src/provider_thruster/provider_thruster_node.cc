@@ -38,7 +38,7 @@ namespace provider_thruster {
 
 
         thrusterEffortSubscriber = nh->subscribe("/provider_thruster/thruster_effort", 1000, &ProviderThrusterNode::thrusterEffortCallback, this);
-        effortSubscriber = nh->subscribe("/provider_thruster/thruster_effort_vector", 1000, &ProviderThrusterNode::thrustervectoreffortCallback, this);
+        effortSubscriber = nh->subscribe("/provider_thruster/thruster_effort_vector", 1000, &ProviderThrusterNode::thrusterVectorEffortCallback, this);
 
         this->rs485Publisher = nh->advertise<interface_rs485::SendRS485Msg>("/interface_rs485/dataRx", 1000);
         effortPublisher = nh->advertise<ThrusterEffort>("/provider_thruster/effort", 1000);
@@ -79,8 +79,8 @@ namespace provider_thruster {
     }
 
     //------------------------------------------------------------------------------
-    //
-    void ProviderThrusterNode::thrustervectoreffortCallback(const geometry_msgs::Wrench & msg)
+    // This is the code used when proc_control sends a command
+    void ProviderThrusterNode::thrusterVectorEffortCallback(const geometry_msgs::Wrench & msg)
     {
         ThrusterEffort effortMsg;
 
@@ -108,18 +108,19 @@ namespace provider_thruster {
                 motors_out[j] = motors_in[j] + 100;
             }
             rs485Msg.data.push_back(motors_out[j]);
+            effortMsg.effort = motors_out[j]-100;
             effortMsg.ID = j+1;
-            effortMsg.effort = motors_in[j];
-            effortPublisher.publish(effortMsg);
         }
 
       rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
 
       rs485Publisher.publish(rs485Msg);
+      effortPublisher.publish(effortMsg);
 
     }
 
 
+    //This code is mainly used for dry_test
 
     void ProviderThrusterNode::thrusterEffortCallback(const ThrusterEffort& msg)
     {
@@ -127,17 +128,21 @@ namespace provider_thruster {
 
         rs485Msg.cmd = interface_rs485::SendRS485Msg::CMD_ISI_power;
 
-        int effort = msg.effort;
+        ThrusterEffort motor_out;
 
-        if (effort < -35) {
-            motors_out[msg.ID - 1] = 65;
+        if (msg.effort < -35) {
+            motor_out.effort = 65;
         }
-        else if (effort > 35) {
-            motors_out[msg.ID - 1] = 135;
+        else if (msg.effort > 35) {
+            motor_out.effort = 135;
         }
         else {
-            motors_out[msg.ID - 1] = effort + 100;
+            motor_out.effort = msg.effort + 100;
         }
+
+        motors_out[msg.ID - 1] = motor_out.effort;
+        motor_out.effort -= 100;
+        motor_out.ID = msg.ID;
 
         rs485Msg.data.clear();
         for(uint8_t i = 0; i < 8; i++) {
@@ -147,7 +152,7 @@ namespace provider_thruster {
         rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
 
         rs485Publisher.publish(rs485Msg);
-        effortPublisher.publish(msg);
+        effortPublisher.publish(motor_out);
 
     }
 }
