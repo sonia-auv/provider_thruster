@@ -108,14 +108,15 @@ namespace provider_thruster {
                 motors_out[j] = motors_in[j] + 100;
             }
             rs485Msg.data.push_back(motors_out[j]);
-            effortMsg.effort = motors_out[j]-100;
+            
             effortMsg.ID = j+1;
+            effortMsg.effort = motors_out[j]-100;
+            effortPublisher.publish(effortMsg);
         }
 
       rs485Msg.slave = interface_rs485::SendRS485Msg::SLAVE_ISI_PWM;
 
       rs485Publisher.publish(rs485Msg);
-      effortPublisher.publish(effortMsg);
 
     }
 
