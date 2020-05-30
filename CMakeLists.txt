@@ -35,7 +35,7 @@ find_package(catkin REQUIRED COMPONENTS
         roscpp
         std_msgs
         message_generation
-        interface_rs485
+        sonia_msgs
         geometry_msgs
         )
 
@@ -56,7 +56,7 @@ catkin_package(
         roscpp
         std_msgs
         message_runtime
-        interface_rs485
+        sonia_msgs
 )
 
 #===============================================================================
@@ -91,7 +91,7 @@ target_link_libraries(provider_thruster_node
         yaml-cpp
         )
 
-add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp ${PROJECT_NAME}_generate_messages_cpp  ${catkin_EXPORTED_TARGETS})
 
 #============================================================================
 # U N I T   T E S T S
