@@ -41,7 +41,7 @@ namespace provider_thruster {
         effortSubscriber = nh->subscribe("/provider_thruster/thruster_effort_vector", 1000, &ProviderThrusterNode::thrustervectoreffortCallback, this);
 
         this->rs485Publisher = nh->advertise<sonia_msgs::SendRS485Msg>("/interface_rs485/dataRx", 1000);
-        effortPublisher = nh->advertise<ThrusterEffort>("/provider_thruster/effort", 1000);
+        effortPublisher = nh->advertise<sonia_msgs::ThrusterEffort>("/provider_thruster/effort", 1000);
 
         rs485Msg.cmd = sonia_msgs::SendRS485Msg::CMD_ISI_power;
         rs485Msg.slave = sonia_msgs::SendRS485Msg::SLAVE_ISI_PWM;
@@ -82,7 +82,7 @@ namespace provider_thruster {
     //
     void ProviderThrusterNode::thrustervectoreffortCallback(const geometry_msgs::Wrench & msg)
     {
-        ThrusterEffort effortMsg;
+        sonia_msgs::ThrusterEffort effortMsg;
 
         rs485Msg.cmd = sonia_msgs::SendRS485Msg::CMD_ISI_power;
 
@@ -121,7 +121,7 @@ namespace provider_thruster {
 
 
 
-    void ProviderThrusterNode::thrusterEffortCallback(const ThrusterEffort& msg)
+    void ProviderThrusterNode::thrusterEffortCallback(const sonia_msgs::ThrusterEffort& msg)
     {
         ROS_DEBUG("Message received : {ID: %u, effort: %i}", msg.ID, msg.effort);
 
