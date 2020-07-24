@@ -7,8 +7,8 @@
 
 #include <ros/ros.h>
 #include <geometry_msgs/Wrench.h>
-#include "provider_thruster/ThrusterEffort.h"
-#include "interface_rs485/SendRS485Msg.h"
+#include <sonia_msgs/ThrusterEffort.h>
+#include <sonia_msgs/SendRS485Msg.h>
 #include <eigen3/Eigen/Eigen>
 #include <yaml-cpp/yaml.h>
 #include <string>
@@ -46,17 +46,15 @@ class ProviderThrusterNode {
     ros::Subscriber thrusterEffortSubscriber;
     ros::Subscriber effortSubscriber;
 
-  void thrusterEffortCallback(const ThrusterEffort& msg);
+  void thrusterEffortCallback(const sonia_msgs::ThrusterEffort& msg);
   void thrustervectoreffortCallback(const geometry_msgs::Wrench & msg);
   void publishLastCommand();
 
 
-  interface_rs485::SendRS485Msg rs485Msg;
-  //uint8_t power[8];
+  sonia_msgs::SendRS485Msg rs485Msg;
   ros::Publisher rs485Publisher;
   ros::Publisher effortPublisher;
 
-  const std::string file_path_ = std::string(std::getenv("ROS_SONIA_WS") ) + "/src" + "/provider_thruster" + "/config" + "/thruster.yaml";
   motor_output motors_out;
   motor_input motors_in;
   tab_string fichier;

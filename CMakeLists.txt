@@ -34,20 +34,9 @@ set(provider_thruster_SRC_DIR "src")
 find_package(catkin REQUIRED COMPONENTS
         roscpp
         std_msgs
-        message_generation
-        interface_rs485
+        sonia_msgs
         geometry_msgs
         )
-
-# CMake does not detect new file when globbing.
-# Please, regenerate your CMake solution if you add a file.
-#file(GLOB srv_files RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/srv/"
-#        "${CMAKE_CURRENT_SOURCE_DIR}/srv/*.srv")
-#add_service_files(DIRECTORY srv FILES ${srv_files})
-
-add_message_files(DIRECTORY msg FILES ThrusterEffort.msg)
-
-generate_messages(DEPENDENCIES std_msgs)
 
 catkin_package(
         INCLUDE_DIRS ${provider_thruster_SRC_DIR}
@@ -55,8 +44,7 @@ catkin_package(
         CATKIN_DEPENDS
         roscpp
         std_msgs
-        message_runtime
-        interface_rs485
+        sonia_msgs
 )
 
 #===============================================================================
@@ -91,7 +79,7 @@ target_link_libraries(provider_thruster_node
         yaml-cpp
         )
 
-add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})
 
 #============================================================================
 # U N I T   T E S T S
