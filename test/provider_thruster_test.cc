@@ -3,8 +3,8 @@
 //
 
 #include <gtest/gtest.h>
-#include <provider_thruster/ThrusterEffort.h>
-#include <provider_thruster/provider_thruster_node.h>
+#include <sonia_msgs/ThrusterEffort.h>
+#include "../src/provider_thruster/provider_thruster_node.h"
 #include "ros/ros.h"
 
 class ThrusterEffortMock
@@ -13,7 +13,7 @@ public:
 
     ThrusterEffortMock(ros::NodeHandlePtr &nh): nh(nh)
     {
-        thrusterEffortPublisher = nh->advertise<provider_thruster::ThrusterEffort>("/provider_thruster/thruster_effort", 1000);
+        thrusterEffortPublisher = nh->advertise<sonia_msgs::ThrusterEffort>("/provider_thruster/thruster_effort", 1000);
     }
     ~ThrusterEffortMock()
     {
@@ -24,58 +24,58 @@ public:
     void initializeMockTest1()
     {
 
-        provider_thruster::ThrusterEffort message1;
+        sonia_msgs::ThrusterEffort message1;
 
-        message1.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T1;
+        message1.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T1;
         message1.effort = -120;
 
         messages.push_back(message1);
 
-        provider_thruster::ThrusterEffort message2;
+        sonia_msgs::ThrusterEffort message2;
 
-        message2.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T2;
+        message2.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T2;
         message2.effort = -101;
 
         messages.push_back(message2);
 
-        provider_thruster::ThrusterEffort message3;
+        sonia_msgs::ThrusterEffort message3;
 
-        message3.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T3;
+        message3.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T3;
         message3.effort = -100;
 
         messages.push_back(message3);
 
-        provider_thruster::ThrusterEffort message4;
+        sonia_msgs::ThrusterEffort message4;
 
-        message4.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T4;
+        message4.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T4;
         message4.effort = -100;
 
         messages.push_back(message4);
 
-        provider_thruster::ThrusterEffort message5;
+        sonia_msgs::ThrusterEffort message5;
 
-        message5.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T5;
+        message5.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T5;
         message5.effort = -100;
 
         messages.push_back(message5);
 
-        provider_thruster::ThrusterEffort message6;
+        sonia_msgs::ThrusterEffort message6;
 
-        message6.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T6;
+        message6.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T6;
         message6.effort = -100;
 
         messages.push_back(message6);
 
-        provider_thruster::ThrusterEffort message7;
+        sonia_msgs::ThrusterEffort message7;
 
-        message7.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T7;
+        message7.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T7;
         message7.effort = -100;
 
         messages.push_back(message7);
 
-        provider_thruster::ThrusterEffort message8;
+        sonia_msgs::ThrusterEffort message8;
 
-        message8.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T8;
+        message8.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T8;
         message8.effort = -100;
 
         messages.push_back(message8);
@@ -86,58 +86,58 @@ public:
     void initializeMockTest2()
     {
 
-        provider_thruster::ThrusterEffort message1;
+        sonia_msgs::ThrusterEffort message1;
 
-        message1.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T1;
+        message1.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T1;
         message1.effort = -99;
 
         messages.push_back(message1);
 
-        provider_thruster::ThrusterEffort message2;
+        sonia_msgs::ThrusterEffort message2;
 
-        message2.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T2;
+        message2.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T2;
         message2.effort = -75;
 
         messages.push_back(message2);
 
-        provider_thruster::ThrusterEffort message3;
+        sonia_msgs::ThrusterEffort message3;
 
-        message3.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T3;
+        message3.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T3;
         message3.effort = -50;
 
         messages.push_back(message3);
 
-        provider_thruster::ThrusterEffort message4;
+        sonia_msgs::ThrusterEffort message4;
 
-        message4.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T4;
+        message4.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T4;
         message4.effort = 0;
 
         messages.push_back(message4);
 
-        provider_thruster::ThrusterEffort message5;
+        sonia_msgs::ThrusterEffort message5;
 
-        message5.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T5;
+        message5.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T5;
         message5.effort = 25;
 
         messages.push_back(message5);
 
-        provider_thruster::ThrusterEffort message6;
+        sonia_msgs::ThrusterEffort message6;
 
-        message6.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T6;
+        message6.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T6;
         message6.effort = 50;
 
         messages.push_back(message6);
 
-        provider_thruster::ThrusterEffort message7;
+        sonia_msgs::ThrusterEffort message7;
 
-        message7.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T7;
+        message7.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T7;
         message7.effort = 75;
 
         messages.push_back(message7);
 
-        provider_thruster::ThrusterEffort message8;
+        sonia_msgs::ThrusterEffort message8;
 
-        message8.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T8;
+        message8.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T8;
         message8.effort = 99;
 
         messages.push_back(message8);
@@ -148,58 +148,58 @@ public:
     void initializeMockTest3()
     {
 
-        provider_thruster::ThrusterEffort message1;
+        sonia_msgs::ThrusterEffort message1;
 
-        message1.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T1;
+        message1.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T1;
         message1.effort = 100;
 
         messages.push_back(message1);
 
-        provider_thruster::ThrusterEffort message2;
+        sonia_msgs::ThrusterEffort message2;
 
-        message2.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T2;
+        message2.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T2;
         message2.effort = 101;
 
         messages.push_back(message2);
 
-        provider_thruster::ThrusterEffort message3;
+        sonia_msgs::ThrusterEffort message3;
 
-        message3.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T3;
+        message3.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T3;
         message3.effort = 102;
 
         messages.push_back(message3);
 
-        provider_thruster::ThrusterEffort message4;
+        sonia_msgs::ThrusterEffort message4;
 
-        message4.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T4;
+        message4.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T4;
         message4.effort = 110;
 
         messages.push_back(message4);
 
-        provider_thruster::ThrusterEffort message5;
+        sonia_msgs::ThrusterEffort message5;
 
-        message5.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T5;
+        message5.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T5;
         message5.effort = 150;
 
         messages.push_back(message5);
 
-        provider_thruster::ThrusterEffort message6;
+        sonia_msgs::ThrusterEffort message6;
 
-        message6.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T6;
+        message6.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T6;
         message6.effort = 100;
 
         messages.push_back(message6);
 
-        provider_thruster::ThrusterEffort message7;
+        sonia_msgs::ThrusterEffort message7;
 
-        message7.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T7;
+        message7.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T7;
         message7.effort = 100;
 
         messages.push_back(message7);
 
-        provider_thruster::ThrusterEffort message8;
+        sonia_msgs::ThrusterEffort message8;
 
-        message8.ID = provider_thruster::ThrusterEffort::UNIQUE_ID_T8;
+        message8.ID = sonia_msgs::ThrusterEffort::UNIQUE_ID_T8;
         message8.effort = 100;
 
         messages.push_back(message8);
@@ -221,7 +221,7 @@ private:
 
     ros::Publisher thrusterEffortPublisher;
 
-    std::vector<provider_thruster::ThrusterEffort> messages;
+    std::vector<sonia_msgs::ThrusterEffort> messages;
 
 };
 
