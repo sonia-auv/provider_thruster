@@ -40,11 +40,11 @@ namespace provider_thruster {
         thrusterEffortSubscriber = nh->subscribe("/provider_thruster/thruster_effort", 1000, &ProviderThrusterNode::thrusterEffortCallback, this);
         effortSubscriber = nh->subscribe("/provider_thruster/thruster_effort_vector", 1000, &ProviderThrusterNode::thrustervectoreffortCallback, this);
 
-        this->rs485Publisher = nh->advertise<sonia_msgs::SendRS485Msg>("/interface_rs485/dataRx", 1000);
-        effortPublisher = nh->advertise<sonia_msgs::ThrusterEffort>("/provider_thruster/effort", 1000);
+        this->rs485Publisher = nh->advertise<sonia_common::SendRS485Msg>("/interface_rs485/dataRx", 1000);
+        effortPublisher = nh->advertise<sonia_common::ThrusterEffort>("/provider_thruster/effort", 1000);
 
-        rs485Msg.cmd = sonia_msgs::SendRS485Msg::CMD_ISI_power;
-        rs485Msg.slave = sonia_msgs::SendRS485Msg::SLAVE_ISI_PWM;
+        rs485Msg.cmd = sonia_common::SendRS485Msg::CMD_ISI_power;
+        rs485Msg.slave = sonia_common::SendRS485Msg::SLAVE_ISI_PWM;
         for(uint8_t i = 0; i < 8; i++) {
             motors_out[i] = 100;
         }
@@ -82,9 +82,9 @@ namespace provider_thruster {
     //
     void ProviderThrusterNode::thrustervectoreffortCallback(const geometry_msgs::Wrench & msg)
     {
-        sonia_msgs::ThrusterEffort effortMsg;
+        sonia_common::ThrusterEffort effortMsg;
 
-        rs485Msg.cmd = sonia_msgs::SendRS485Msg::CMD_ISI_power;
+        rs485Msg.cmd = sonia_common::SendRS485Msg::CMD_ISI_power;
 
         vecteur[0]=msg.force.x;
         vecteur[1]=msg.force.y;
@@ -113,7 +113,7 @@ namespace provider_thruster {
             effortPublisher.publish(effortMsg);
         }
 
-      rs485Msg.slave = sonia_msgs::SendRS485Msg::SLAVE_ISI_PWM;
+      rs485Msg.slave = sonia_common::SendRS485Msg::SLAVE_ISI_PWM;
 
       rs485Publisher.publish(rs485Msg);
 
@@ -121,11 +121,11 @@ namespace provider_thruster {
 
 
 
-    void ProviderThrusterNode::thrusterEffortCallback(const sonia_msgs::ThrusterEffort& msg)
+    void ProviderThrusterNode::thrusterEffortCallback(const sonia_common::ThrusterEffort& msg)
     {
         ROS_DEBUG("Message received : {ID: %u, effort: %i}", msg.ID, msg.effort);
 
-        rs485Msg.cmd = sonia_msgs::SendRS485Msg::CMD_ISI_power;
+        rs485Msg.cmd = sonia_common::SendRS485Msg::CMD_ISI_power;
 
         int effort = msg.effort;
 
@@ -144,7 +144,7 @@ namespace provider_thruster {
             rs485Msg.data.push_back(motors_out[i]);
         }
 
-        rs485Msg.slave = sonia_msgs::SendRS485Msg::SLAVE_ISI_PWM;
+        rs485Msg.slave = sonia_common::SendRS485Msg::SLAVE_ISI_PWM;
 
         rs485Publisher.publish(rs485Msg);
         effortPublisher.publish(msg);

@@ -34,7 +34,7 @@ set(provider_thruster_SRC_DIR "src")
 find_package(catkin REQUIRED COMPONENTS
         roscpp
         std_msgs
-        sonia_msgs
+        sonia_common
         geometry_msgs
         )
 
@@ -44,7 +44,7 @@ catkin_package(
         CATKIN_DEPENDS
         roscpp
         std_msgs
-        sonia_msgs
+        sonia_common
 )
 
 #===============================================================================
@@ -60,7 +60,6 @@ list(REMOVE_ITEM provider_thruster_FILES
 include_directories(
         ${catkin_INCLUDE_DIRS}
         ${provider_thruster_SRC_DIR}
-        ${lib_atlas_INCLUDE_DIRS}
 )
 #===============================================================================
 # C R E A T E   E X E C U T A B L E
