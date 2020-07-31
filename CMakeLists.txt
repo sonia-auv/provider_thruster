@@ -67,8 +67,6 @@ include_directories(
 add_executable(${PROJECT_NAME}_node
         ${provider_thruster_SRC_DIR}/${PROJECT_NAME}/main.cc
         ${provider_thruster_SRC_DIR}/${PROJECT_NAME}/provider_thruster_node.cc
-        #/test/temp_test.cc
-        #${provider_thruster_FILES} test/temp_test.cc
         )
 
 
@@ -85,8 +83,8 @@ add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})
 
 # Uncomment this line to compile UT.
 #add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
-if (${CATKIN_ENABLE_TESTING})
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
-endif ()
+#if (${CATKIN_ENABLE_TESTING})
+#    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
+#endif ()
 
 
