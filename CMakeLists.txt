@@ -34,20 +34,9 @@ set(provider_thruster_SRC_DIR "src")
 find_package(catkin REQUIRED COMPONENTS
         roscpp
         std_msgs
-        message_generation
-        interface_rs485
+        sonia_common
         geometry_msgs
         )
-
-# CMake does not detect new file when globbing.
-# Please, regenerate your CMake solution if you add a file.
-#file(GLOB srv_files RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/srv/"
-#        "${CMAKE_CURRENT_SOURCE_DIR}/srv/*.srv")
-#add_service_files(DIRECTORY srv FILES ${srv_files})
-
-add_message_files(DIRECTORY msg FILES ThrusterEffort.msg)
-
-generate_messages(DEPENDENCIES std_msgs)
 
 catkin_package(
         INCLUDE_DIRS ${provider_thruster_SRC_DIR}
@@ -55,8 +44,7 @@ catkin_package(
         CATKIN_DEPENDS
         roscpp
         std_msgs
-        message_runtime
-        interface_rs485
+        sonia_common
 )
 
 #===============================================================================
@@ -72,7 +60,6 @@ list(REMOVE_ITEM provider_thruster_FILES
 include_directories(
         ${catkin_INCLUDE_DIRS}
         ${provider_thruster_SRC_DIR}
-        ${lib_atlas_INCLUDE_DIRS}
 )
 #===============================================================================
 # C R E A T E   E X E C U T A B L E
@@ -80,8 +67,6 @@ include_directories(
 add_executable(${PROJECT_NAME}_node
         ${provider_thruster_SRC_DIR}/${PROJECT_NAME}/main.cc
         ${provider_thruster_SRC_DIR}/${PROJECT_NAME}/provider_thruster_node.cc
-        #/test/temp_test.cc
-        #${provider_thruster_FILES} test/temp_test.cc
         )
 
 
@@ -91,15 +76,15 @@ target_link_libraries(provider_thruster_node
         yaml-cpp
         )
 
-add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})
 
 #============================================================================
 # U N I T   T E S T S
 
 # Uncomment this line to compile UT.
 #add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
-if (${CATKIN_ENABLE_TESTING})
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
-endif ()
+#if (${CATKIN_ENABLE_TESTING})
+#    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
+#endif ()
 
 
