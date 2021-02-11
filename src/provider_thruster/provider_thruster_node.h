@@ -31,7 +31,7 @@ class ProviderThrusterNode {
 
     ros::Subscriber thrusterPwmSubscriber;
 
-  void ProviderThrusterNode::thrusterPwmCallback(const sonia_common::ThrusterPwm & msg);
+  void thrusterPwmCallback(const sonia_common::ThrusterPwm & msg);
 
 
   sonia_common::SendRS485Msg rs485Msg;
