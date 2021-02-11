@@ -21,17 +21,6 @@ namespace provider_thruster {
         thrusterPwmSubscriber = nh->subscribe("/provider_thruster/thruster_pwm", 100, &ProviderThrusterNode::thrusterPwmCallback, this);
 
         this->rs485Publisher = nh->advertise<sonia_common::SendRS485Msg>("/interface_rs485/dataRx", 1000);
-        effortPublisher = nh->advertise<sonia_common::ThrusterEffort>("/provider_thruster/effort", 1000);
-
-        rs485Msg.cmd = sonia_common::SendRS485Msg::CMD_ISI_power;
-        rs485Msg.slave = sonia_common::SendRS485Msg::SLAVE_ISI_PWM;
-        
-        // Initial inputs (U0)
-
-        for(uint8_t i = 0; i < nb_thruster; i++) {
-            motors_out[i] = default_pwm;
-        }
-
     }
 
     //------------------------------------------------------------------------------
