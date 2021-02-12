@@ -4,6 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "build",
             "type": "catkin_make",
             "args": [
                 "--directory",
@@ -15,8 +16,7 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "label": "build"
+            } 
         }
     ]
 }
