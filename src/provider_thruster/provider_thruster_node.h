@@ -8,14 +8,13 @@
 #include <ros/ros.h>
 #include <std_msgs/UInt16MultiArray.h>
 #include <sonia_common/SendRS485Msg.h>
-
 #include <string>
 
 
 namespace provider_thruster {
 
 class ProviderThrusterNode {
-  
+
   public:
 
     //============================================================================
