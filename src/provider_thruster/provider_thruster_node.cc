@@ -39,23 +39,19 @@ namespace provider_thruster {
     }
     //------------------------------------------------------------------------------
     //
-    void ProviderThrusterNode::thrusterPwmCallback(const sonia_common::ThrusterPwm & msg)
+    void ProviderThrusterNode::thrusterPwmCallback(const std_msgs::UInt16MultiArray & msg)
     {
-
         rs485Msg.cmd = sonia_common::SendRS485Msg::CMD_ISI_power;
-
         rs485Msg.data.clear();
 
         for(uint8_t i=0; i<nb_thruster; ++i)
         {
-            rs485Msg.data.push_back(msg.pwm[i]>>8);
-            rs485Msg.data.push_back(msg.pwm[i] & 0xFF);
+            rs485Msg.data.push_back(msg.data[i]>>8);
+            rs485Msg.data.push_back(msg.data[i] & 0xFF);
         }
 
         rs485Msg.slave = sonia_common::SendRS485Msg::SLAVE_ISI_PWM;
-
         rs485Publisher.publish(rs485Msg);
-
     }
 }
 
