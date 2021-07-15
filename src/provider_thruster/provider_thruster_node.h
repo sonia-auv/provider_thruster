@@ -8,6 +8,7 @@
 #include <ros/ros.h>
 #include <sonia_common/ThrusterPwm.h>
 #include <sonia_common/SendRS485Msg.h>
+#include <std_srvs/Empty.h>
 #include <yaml-cpp/yaml.h>
 #include <string>
 
@@ -31,15 +32,25 @@ class ProviderThrusterNode {
 
     ros::Subscriber thrusterPwmSubscriber;
 
-  void thrusterPwmCallback(const sonia_common::ThrusterPwm & msg);
+  
 
 
   sonia_common::SendRS485Msg rs485Msg;
   ros::Publisher rs485Publisher;
   ros::Publisher effortPublisher;
 
+  // Pour le service Dry Test.
+  sonia_common::ThrusterPwm pwmsMsg;
+  ros::Publisher pwmPublisher;
+  ros::ServiceServer dryTestService;
+
+
   uint8_t nb_thruster = 8;
   uint16_t default_pwm = 1500;
+
+  bool dryTestServiceCallback(std_srvs::Empty::Request & req, std_srvs::Empty::Response & resp);
+
+  void thrusterPwmCallback(const sonia_common::ThrusterPwm & msg);
 
 };
 }  // namespace provider_thruster
