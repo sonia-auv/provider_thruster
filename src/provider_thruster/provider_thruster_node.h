@@ -44,7 +44,6 @@ class ProviderThrusterNode {
   ros::Publisher pwmPublisher;
   ros::ServiceServer dryTestService;
 
-
   uint8_t nb_thruster = 8;
   uint16_t default_pwm = 1500;
 
