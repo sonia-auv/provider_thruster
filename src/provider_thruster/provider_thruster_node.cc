@@ -20,7 +20,7 @@ namespace provider_thruster {
     {
         thrusterPwmSubscriber = nh->subscribe("/provider_thruster/thruster_pwm", 100, &ProviderThrusterNode::thrusterPwmCallback, this);
         dryTestService = nh->advertiseService("/provider_thruster/dry_test", &ProviderThrusterNode::dryTestServiceCallback, this);
-        pwmPublisher = nh->advertise<std_msgs::UInt16MultiArray>("/provider_thruster/thruster_pwm");
+        pwmPublisher = nh->advertise<std_msgs::UInt16MultiArray>("/provider_thruster/thruster_pwm", 1000);
         
 
         this->rs485Publisher = nh->advertise<sonia_common::SendRS485Msg>("/interface_rs485/dataRx", 1000);
@@ -59,6 +59,20 @@ namespace provider_thruster {
 
     bool ProviderThrusterNode::dryTestServiceCallback(std_srvs::Empty::Request & req, std_srvs::Empty::Response & resp)
     {
+        std::vector<uint16_t> vect = {default_pwm, default_pwm, default_pwm, default_pwm, default_pwm, default_pwm, default_pwm, default_pwm};
+        std_msgs::UInt16MultiArray pwmsMsg;
+        pwmsMsg.data.clear();
+        pwmsMsg.data.insert(pwmsMsg.data.end(), vect.begin(), vect.end());
+        
+        for(uint8_t i=0; i < nb_thruster; ++i)
+        {
+            pwmsMsg.data[i] = dryTestPwm;
+            pwmPublisher.publish(pwmsMsg);
+            ros::Duration(dryTestOnTime).sleep();
+            pwmsMsg.data[i] = default_pwm;
+            pwmPublisher.publish(pwmsMsg);
+            ros::Duration(dryTestDelay).sleep();
+        }
         return true;
     }
 }
