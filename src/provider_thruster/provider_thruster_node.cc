@@ -19,6 +19,9 @@ namespace provider_thruster {
         nh_(nh)
     {
         thrusterPwmSubscriber = nh->subscribe("/provider_thruster/thruster_pwm", 100, &ProviderThrusterNode::thrusterPwmCallback, this);
+        dryTestService = nh->advertiseService("/provider_thruster/dry_test", &ProviderThrusterNode::dryTestServiceCallback, this);
+        pwmPublisher = nh->advertise<std_msgs::UInt16MultiArray>("/provider_thruster/thruster_pwm");
+        
 
         this->rs485Publisher = nh->advertise<sonia_common::SendRS485Msg>("/interface_rs485/dataRx", 1000);
     }
@@ -52,6 +55,11 @@ namespace provider_thruster {
 
         rs485Msg.slave = sonia_common::SendRS485Msg::SLAVE_ISI_PWM;
         rs485Publisher.publish(rs485Msg);
+    }
+
+    bool ProviderThrusterNode::dryTestServiceCallback(std_srvs::Empty::Request & req, std_srvs::Empty::Response & resp)
+    {
+        return true;
     }
 }
 
