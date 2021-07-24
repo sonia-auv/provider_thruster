@@ -19,7 +19,7 @@ namespace provider_thruster {
         nh_(nh)
     {
         thrusterPwmSubscriber = nh->subscribe("/provider_thruster/thruster_pwm", 100, &ProviderThrusterNode::thrusterPwmCallback, this);
-        dryTestService = nh->advertiseService("/provider_thruster/dry_test", &ProviderThrusterNode::dryTestServiceCallback, this);
+        dryTestService = nh->subscribe("/provider_thruster/dry_test",100, &ProviderThrusterNode::dryTestServiceCallback, this);
         pwmPublisher = nh->advertise<std_msgs::UInt16MultiArray>("/provider_thruster/thruster_pwm", 1000);
         
 
