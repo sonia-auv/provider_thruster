@@ -8,14 +8,18 @@
 #include <ros/ros.h>
 #include <std_msgs/UInt16MultiArray.h>
 #include <sonia_common/SendRS485Msg.h>
+<<<<<<< HEAD
 #include <std_srvs/Empty.h>
+=======
+
+>>>>>>> parent of 3c6caed... remove indexation
 #include <string>
 
 
 namespace provider_thruster {
 
 class ProviderThrusterNode {
-
+  
   public:
 
     //============================================================================
