@@ -9,7 +9,11 @@
 #include <std_msgs/UInt16MultiArray.h>
 #include <sonia_common/SendRS485Msg.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <std_srvs/Empty.h>
+=======
+
+>>>>>>> parent of 3c6caed... remove indexation
 =======
 
 >>>>>>> parent of 3c6caed... remove indexation
