@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>provider_thruster</name>
-  <version>1.1.4</version>
+  <version>1.1.5</version>
   <description>The provider_thruster package</description>
 
   <author>Marc-Antoine Couture</author>
