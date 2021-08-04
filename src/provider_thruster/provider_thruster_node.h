@@ -40,7 +40,7 @@ class ProviderThrusterNode {
     // Pour le service Dry Test.
     
     ros::Publisher pwmPublisher;
-    //ros::ServiceServer dryTestService;
+    ros::ServiceServer dryTestService;
 
     uint32_t dryTestDelay = 2;
     uint32_t dryTestOnTime = 3;
