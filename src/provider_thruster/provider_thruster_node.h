@@ -42,11 +42,11 @@ class ProviderThrusterNode {
     ros::Publisher pwmPublisher;
     ros::ServiceServer dryTestService;
 
-    uint32_t dryTestDelay = 2;
+    uint32_t dryTestDelay = 1;
     uint32_t dryTestOnTime = 3;
     uint8_t nb_thruster = 8;
     uint16_t default_pwm = 1500;
-    uint16_t dryTestPwm = 1545;
+    uint16_t dryTestPwm = 1550;
 
     bool dryTestServiceCallback(std_srvs::Empty::Request & req, std_srvs::Empty::Response & resp);
     void thrusterPwmCallback(const std_msgs::UInt16MultiArray & msg);
