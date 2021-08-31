@@ -44,7 +44,7 @@ namespace provider_thruster {
     //
     void ProviderThrusterNode::thrusterPwmCallback(const std_msgs::UInt16MultiArray & msg)
     {
-        rs485Msg.slave = sonia_common::SendRS485Msg::SLAVE_BACKPLANE;
+        rs485Msg.slave = sonia_common::SendRS485Msg::SLAVE_PSU0;
         rs485Msg.cmd = sonia_common::SendRS485Msg::CMD_PWM;
         rs485Msg.data.clear();
 
