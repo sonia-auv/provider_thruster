@@ -6,63 +6,53 @@
 #define PROVIDER_THRUSTER_PROVIDER_THRUSTER_NODE_H
 
 #include <ros/ros.h>
-#include <geometry_msgs/Wrench.h>
-#include <sonia_common/ThrusterEffort.h>
+#include <std_msgs/UInt16MultiArray.h>
 #include <sonia_common/SendRS485Msg.h>
-#include <eigen3/Eigen/Eigen>
-#include <yaml-cpp/yaml.h>
+#include <std_srvs/Empty.h>
 #include <string>
 
 
 namespace provider_thruster {
 
 class ProviderThrusterNode {
- public:
+  
+  public:
 
-    typedef Eigen::Matrix<double, Eigen::Dynamic,6>  MatrixXd;
-    typedef Eigen::Matrix<uint8_t , Eigen::Dynamic,1>  motor_output;
-    typedef Eigen::Matrix<double , Eigen::Dynamic,1>  motor_input;
-    typedef Eigen::Matrix<double, 6,1>  Vector6d;
-    typedef std::vector<std::string> tab_string;
-  //============================================================================
-  // P U B L I C   C / D T O R S
+    //============================================================================
+    // P U B L I C   C / D T O R S
 
+    ProviderThrusterNode(ros::NodeHandlePtr &nh);
 
-
-  ProviderThrusterNode(ros::NodeHandlePtr &nh);
-
-  ~ProviderThrusterNode();
+    ~ProviderThrusterNode();
 
     void Spin();
 
-    uint8_t getPower(int index)
-    {
-        return motors_out[index];
-    }
-
- private:
-  ros::NodeHandlePtr nh_;
-
-    ros::Subscriber thrusterEffortSubscriber;
-    ros::Subscriber effortSubscriber;
-
-  void thrusterEffortCallback(const sonia_common::ThrusterEffort& msg);
-  void thrustervectoreffortCallback(const geometry_msgs::Wrench & msg);
-  void publishLastCommand();
+  private:
+    ros::NodeHandlePtr nh_;
 
 
-  sonia_common::SendRS485Msg rs485Msg;
-  ros::Publisher rs485Publisher;
-  ros::Publisher effortPublisher;
+    ros::Subscriber thrusterPwmSubscriber;
 
-  motor_output motors_out;
-  motor_input motors_in;
-  tab_string fichier;
-  MatrixXd calcul;
-  Vector6d vecteur;
+    sonia_common::SendRS485Msg rs485Msg;
+    ros::Publisher rs485Publisher;
+    ros::Publisher effortPublisher;
 
+    // Pour le service Dry Test.
+    
+    ros::Publisher pwmPublisher;
+    ros::ServiceServer dryTestService;
+
+    uint32_t dryTestDelay = 1;
+    uint32_t dryTestOnTime = 3;
+    uint8_t nb_thruster = 8;
+    uint16_t default_pwm = 1500;
+    uint16_t dryTestPwm = 1550;
+
+    bool dryTestServiceCallback(std_srvs::Empty::Request & req, std_srvs::Empty::Response & resp);
+    void thrusterPwmCallback(const std_msgs::UInt16MultiArray & msg);
 
 };
+
 }  // namespace provider_thruster
 
 #endif //PROVIDER_THRUSTER_PROVIDER_THRUSTER_NODE_H

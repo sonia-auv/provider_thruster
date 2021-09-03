@@ -72,8 +72,6 @@ add_executable(${PROJECT_NAME}_node
 
 target_link_libraries(provider_thruster_node
         ${catkin_LIBRARIES}
-        ${Eigen_LIBRARIES}
-        yaml-cpp
         )
 
 add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})
