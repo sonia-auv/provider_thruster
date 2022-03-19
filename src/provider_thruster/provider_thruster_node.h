@@ -51,7 +51,7 @@ class ProviderThrusterNode {
     bool dryTestServiceCallback(std_srvs::Empty::Request & req, std_srvs::Empty::Response & resp);
     void thrusterPwmCallback(const std_msgs::UInt16MultiArray & msg);
 
-    int SLAVE;
+    uint8_t SLAVE;
 
 };
 

@@ -27,34 +27,17 @@ namespace provider_thruster {
 
         const char* auv = std::getenv("AUV");
 
-        if (auv=="AUV8"){
+        if (strcmp(auv, "AUV8") == 0){
             SLAVE = sonia_common::SendRS485Msg::SLAVE_ESC;    
         }
 
-        else if (auv=="AUV7"){
+        else if (strcmp(auv, "AUV7") == 0){
             SLAVE = sonia_common::SendRS485Msg::SLAVE_PWR_MANAGEMENT;
         }
 
-        else if (auv=="LOCAL"){
-            SLAVE = sonia_common::SendRS485Msg::SLAVE_PSU0;
+        else if (strcmp(auv, "LOCAL") == 0){
+            SLAVE = sonia_common::SendRS485Msg::SLAVE_PWR_MANAGEMENT;
         }
-
-        /* switch(auv)
-            {
-
-            case "AUV7":
-                SLAVE = sonia_common::SendRS485Msg::SLAVE_ESC;
-                break;
-
-            case "AUV8":
-                SLAVE = sonia_common::SendRS485Msg::SLAVE_PWR_MANAGEMENT;
-                break;
-
-            case "local":
-                SLAVE = sonia_common::SendRS485Msg::SLAVE_PSU0;
-                break;
-
-        } */
     }
 
     //------------------------------------------------------------------------------
@@ -75,10 +58,7 @@ namespace provider_thruster {
     //
     void ProviderThrusterNode::thrusterPwmCallback(const std_msgs::UInt16MultiArray & msg)
     {
-        
-        
         rs485Msg.slave = SLAVE;
-        //rs485Msg.slave = sonia_common::SendRS485Msg::SLAVE_PSU0; //
         rs485Msg.cmd = sonia_common::SendRS485Msg::CMD_PWM;
         rs485Msg.data.clear();
 
