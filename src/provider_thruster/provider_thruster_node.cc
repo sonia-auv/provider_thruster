@@ -38,6 +38,11 @@ namespace provider_thruster {
         else if (strcmp(auv, "LOCAL") == 0){
             SLAVE = sonia_common::SendRS485Msg::SLAVE_PWR_MANAGEMENT;
         }
+
+        else {
+            ROS_ERROR_STREAM("No environnement variable found, using the default from AUV8");
+            SLAVE = sonia_common::SendRS485Msg::SLAVE_ESC;
+        }
     }
 
     //------------------------------------------------------------------------------
