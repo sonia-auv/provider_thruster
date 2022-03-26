@@ -28,11 +28,11 @@ namespace provider_thruster {
         const char* auv = std::getenv("AUV");
 
         if (strcmp(auv, "AUV8") == 0){
-            SLAVE = sonia_common::SendRS485Msg::SLAVE_ESC;    
+            SLAVE = sonia_common::SendRS485Msg::SLAVE_PWR_MANAGEMENT;
         }
 
         else if (strcmp(auv, "AUV7") == 0){
-            SLAVE = sonia_common::SendRS485Msg::SLAVE_PWR_MANAGEMENT;
+            SLAVE = sonia_common::SendRS485Msg::SLAVE_ESC;
         }
 
         else if (strcmp(auv, "LOCAL") == 0){
