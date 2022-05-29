@@ -4,15 +4,19 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "build",
             "type": "catkin_make",
+            "args": [
+                "--directory",
+                "/home/sonia/ros_sonia_ws"
+            ],
             "problemMatcher": [
                 "$catkin-gcc"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "label": "build"
+            } 
         }
     ]
 }

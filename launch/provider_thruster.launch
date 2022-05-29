@@ -3,8 +3,4 @@
 	    pkg="provider_thruster"
 	    type="provider_thruster_node"
 	    output="screen" />
-
-    <rosparam command="load"
-	    file="$(find provider_thruster)/config/thruster.yaml"
-	    ns="/provider_thruster"/>
 </launch>

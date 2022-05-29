@@ -8,7 +8,7 @@
 #===============================================================================
 # G L O B A L   P R O J E C T   C O N F I G U R A T I O N
 
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 
 project(provider_thruster)
 
@@ -72,8 +72,6 @@ add_executable(${PROJECT_NAME}_node
 
 target_link_libraries(provider_thruster_node
         ${catkin_LIBRARIES}
-        ${Eigen_LIBRARIES}
-        yaml-cpp
         )
 
 add_dependencies(${PROJECT_NAME}_node ${catkin_EXPORTED_TARGETS})
